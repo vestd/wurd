@@ -10,9 +10,10 @@ class LaravelCacheProvider implements CacheProviderInterface
     protected $filesystem;
     protected $filePath;
 
-    public function __construct(Flysystem\Filesystem $filesystem)
+    public function __construct(Flysystem\Filesystem $filesystem, $filePath)
     {
         $this->filesystem = $filesystem;
+        $this->filePath = $filePath;
     }
 
     public function getPage($page)
@@ -53,12 +54,20 @@ class LaravelCacheProvider implements CacheProviderInterface
 
     protected function read()
     {
+        if (!$this->filesystem->has($this->filePath)) {
+            return false;
+        }
+
         $this->filesystem->read($this->filePath);
     }
 
     protected function write($contents)
     {
-        $this->filesystem->write($this->filePath, $contents);
+        if (!$this->filesystem->has($this->filePath)) {
+            $this->filesystem->write($this->filePath, '');
+        }
+
+        $this->filesystem->write($this->filePath, json_encode($contents));
     }
 
 }
