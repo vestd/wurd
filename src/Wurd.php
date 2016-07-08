@@ -25,10 +25,10 @@ class Wurd
 
     public function page($page, $language = null)
     {
-        if ($this->cache->getPage(($page))){
-            return $page;
+        if ($content = $this->cache->getPage(($page))){
+            return $content;
         }
-        
+
         return $this->request($page, $language);
     }
 
