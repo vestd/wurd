@@ -17,7 +17,13 @@ class LaravelCacheProvider implements CacheProviderInterface
 
     public function getPage($page)
     {
-        return 'hi';
+        if ($contents = json_decode($this->read())) {
+            if (array_key_exists($page, $contents)) {
+                return $contents[$page];
+            }
+        }
+
+        return false;
     }
 
     public function getLanguage($page)
@@ -43,6 +49,11 @@ class LaravelCacheProvider implements CacheProviderInterface
     public function storeApp($json)
     {
         // TODO: Implement storeApp() method.
+    }
+
+    protected function read()
+    {
+        $this->filesystem->read($this->filePath);
     }
 
     protected function write($contents)

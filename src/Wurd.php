@@ -29,7 +29,13 @@ class Wurd
             return $content;
         }
 
-        return $this->request($page, $language);
+        $content = $this->request($page, $language);
+
+        if ($content) {
+            $this->cache->storePage($page, $content);
+        }
+
+        return $content;
     }
 
     protected function request($page, $language)
