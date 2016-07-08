@@ -17,7 +17,7 @@ class LaravelCacheProvider implements CacheProviderInterface
 
     public function getPage($page)
     {
-        // TODO: Implement getPage() method.
+        return 'hi';
     }
 
     public function getLanguage($page)
