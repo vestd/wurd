@@ -3,6 +3,7 @@
 namespace Vestd\Wurd;
 
 use GuzzleHttp\Client;
+use Vestd\Wurd\CacheProvider\CacheProviderInterface;
 use Vestd\Wurd\Exception\HttpException;
 
 class Wurd

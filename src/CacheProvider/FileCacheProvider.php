@@ -2,8 +2,6 @@
 
 namespace Vestd\Wurd\CacheProvider;
 
-use Vestd\Wurd\CacheProviderInterface;
-
 class FileCacheProvider implements CacheProviderInterface
 {
     public function __construct()

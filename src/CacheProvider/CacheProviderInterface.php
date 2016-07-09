@@ -1,6 +1,6 @@
 <?php
 
-namespace Vestd\Wurd;
+namespace Vestd\Wurd\CacheProvider;
 
 interface CacheProviderInterface
 {

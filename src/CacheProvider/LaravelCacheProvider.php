@@ -2,7 +2,6 @@
 
 namespace Vestd\Wurd\CacheProvider;
 
-use Vestd\Wurd\CacheProviderInterface;
 use League\Flysystem;
 
 class LaravelCacheProvider implements CacheProviderInterface

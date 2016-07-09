@@ -7,7 +7,7 @@ use League\Flysystem\Filesystem;
 use Vestd\Wurd\CacheProvider\LaravelCacheProvider;
 use Vestd\Wurd\Wurd;
 
-class TwitterTest extends \PHPUnit_Framework_TestCase
+class WurdTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
