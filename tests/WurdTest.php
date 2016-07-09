@@ -2,6 +2,9 @@
 
 namespace Vestd\Wurd\Test;
 
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
+use Vestd\Wurd\CacheProvider\LaravelCacheProvider;
 use Vestd\Wurd\Wurd;
 
 class TwitterTest extends \PHPUnit_Framework_TestCase
@@ -12,7 +15,9 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
      */
     public function it_gets_language_file_from_wurd()
     {
-        $wurd = new Wurd('vestd');
+        $filesystem = new Filesystem(new Local('/home/vagrant/www/Wurd/Vestd/Wurd/tests/language.json'));
+        $cacheProvider = new LaravelCacheProvider($filesystem, '/home/vagrant/www/Wurd/Vestd/Wurd/tests/language.json');
+        $wurd = new Wurd('vestd', $cacheProvider);
         echo($wurd->language());
     }
 

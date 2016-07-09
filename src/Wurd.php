@@ -11,7 +11,7 @@ class Wurd
     protected $appName;
     protected $baseUrl;
 
-    public function __construct($appName, $baseUrl = "https://api.wurd.io/v2/content/", CacheProviderInterface $cacheProvider)
+    public function __construct($appName, CacheProviderInterface $cacheProvider, $baseUrl = "https://api.wurd.io/v2/content/")
     {
         $this->appName = $appName;
         $this->baseUrl = $baseUrl;
@@ -40,6 +40,7 @@ class Wurd
 
     protected function request($page, $language)
     {
+        echo $this->segments($page);
         $client = new Client();
         $res = $client->request('GET', $this->segments($page), [
             'lang' => $language ?: ''
