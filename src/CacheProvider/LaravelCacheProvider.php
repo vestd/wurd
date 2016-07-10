@@ -46,7 +46,7 @@ class LaravelCacheProvider implements CacheProviderInterface
 
     public function storePage($page, $contents)
     {
-        $contents = [$page => $contents];
+        $contents = (object)[$page => $contents];
         $this->write($contents);
     }
 
