@@ -21,7 +21,17 @@ class Wurd
 
     public function language($language = null)
     {
-        return $this->request(null, $language);
+        if ($content = $this->cache->getLanguage(($language))){
+            return $content;
+        }
+
+        $content = $this->request(null, $language);
+
+        if ($content) {
+            $this->cache->storeLanguage($language, $content);
+        }
+
+        return $content;
     }
 
     public function page($page, $language = null)
@@ -41,7 +51,6 @@ class Wurd
 
     protected function request($page, $language)
     {
-        echo $this->segments($page);
         $client = new Client();
         $res = $client->request('GET', $this->segments($page), [
             'lang' => $language ?: ''
@@ -51,13 +60,13 @@ class Wurd
             throw new HttpException();
         }
 
-        return $res->getBody();
+        return json_decode($res->getBody());
     }
     
     protected function segments($page = null)
     {
         if ($page) {
-            return $this->baseUrl . '/' . $this->appName . '/' . $page;
+            return $this->baseUrl . $this->appName . '/' . $page;
         }
 
         return $this->baseUrl . '/' . $this->appName;

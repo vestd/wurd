@@ -15,10 +15,12 @@ class WurdTest extends \PHPUnit_Framework_TestCase
      */
     public function it_gets_language_file_from_wurd()
     {
-        $filesystem = new Filesystem(new Local('/home/vagrant/www/Wurd/Vestd/Wurd/tests/language.json'));
-        $cacheProvider = new LaravelCacheProvider($filesystem, '/home/vagrant/www/Wurd/Vestd/Wurd/tests/language.json');
-        $wurd = new Wurd('vestd', $cacheProvider);
-        echo($wurd->language());
+        $filesystem = new Filesystem(new Local('/home/vagrant/www/Wurd/Vestd/Wurd/tests/'));
+        $cacheProvider = new LaravelCacheProvider($filesystem, '/storage/', 0);
+        $wurd = new Wurd('apitest', $cacheProvider);
+        $content = $wurd->language();
+
+        $this->assertEquals('test string', $content->testpage->teststring);
     }
 
 }
