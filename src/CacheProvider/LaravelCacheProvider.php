@@ -11,6 +11,13 @@ class LaravelCacheProvider implements CacheProviderInterface
     protected $fileName;
     protected $maxAge;
 
+    /**
+     * LaravelCacheProvider constructor.
+     * @param Flysystem\Filesystem $filesystem
+     * @param $filePath
+     * @param $maxAge in minutes
+     * @param string $fileName
+     */
     public function __construct(Flysystem\Filesystem $filesystem, $filePath, $maxAge, $fileName = "wurd.json")
     {
         $this->filesystem = $filesystem;
@@ -19,6 +26,10 @@ class LaravelCacheProvider implements CacheProviderInterface
         $this->maxAge = $maxAge;
     }
 
+    /**
+     * @param $page
+     * @return bool
+     */
     public function getPage($page)
     {
         if ($contents = $this->read()) {
@@ -30,6 +41,10 @@ class LaravelCacheProvider implements CacheProviderInterface
         return false;
     }
 
+    /**
+     * @param $language
+     * @return bool|mixed
+     */
     public function getLanguage($language)
     {
         if ($contents = $this->read($language)) {
@@ -44,22 +59,37 @@ class LaravelCacheProvider implements CacheProviderInterface
         // TODO: Implement getApp() method.
     }
 
+    /**
+     * @param $page
+     * @param $contents
+     */
     public function storePage($page, $contents)
     {
         $contents = (object)[$page => $contents];
         $this->write($contents);
     }
 
+    /**
+     * @param $language
+     * @param $contents
+     */
     public function storeLanguage($language, $contents)
     {
         $this->write($contents, $language);
     }
 
+    /**
+     * @param $json
+     */
     public function storeApp($json)
     {
         // TODO: Implement storeApp() method.
     }
 
+    /**
+     * @param null $language
+     * @return bool|mixed\
+     */
     protected function read($language = null)
     {
         if (!$this->filesystem->has($this->filePath($language))) {
@@ -75,6 +105,10 @@ class LaravelCacheProvider implements CacheProviderInterface
         return $contents;
     }
 
+    /**
+     * @param $contents
+     * @param null $language
+     */
     protected function write($contents, $language = null)
     {
         $contents->updated_at = date("Y-m-d H:i:s");
@@ -82,6 +116,10 @@ class LaravelCacheProvider implements CacheProviderInterface
         $this->filesystem->put($this->filePath($language), json_encode($contents));
     }
 
+    /**
+     * @param null $language
+     * @return string
+     */
     protected function filePath($language = null)
     {
         if ($language) {
@@ -91,6 +129,10 @@ class LaravelCacheProvider implements CacheProviderInterface
         return $this->filePath . $this->fileName;
     }
 
+    /**
+     * @param $contents
+     * @return bool
+     */
     protected function expired($contents)
     {
         if (!property_exists($contents, 'updated_at')) {

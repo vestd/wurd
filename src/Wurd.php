@@ -12,6 +12,12 @@ class Wurd
     protected $appName;
     protected $baseUrl;
 
+    /**
+     * Wurd constructor.
+     * @param $appName
+     * @param CacheProviderInterface $cacheProvider
+     * @param string $baseUrl
+     */
     public function __construct($appName, CacheProviderInterface $cacheProvider, $baseUrl = "https://api.wurd.io/v2/content/")
     {
         $this->appName = $appName;
@@ -19,6 +25,11 @@ class Wurd
         $this->cache = $cacheProvider;
     }
 
+    /**
+     * @param null $language
+     * @return mixed
+     * @throws HttpException
+     */
     public function language($language = null)
     {
         if ($content = $this->cache->getLanguage(($language))){
@@ -34,6 +45,12 @@ class Wurd
         return $content;
     }
 
+    /**
+     * @param $page
+     * @param null $language
+     * @return mixed
+     * @throws HttpException
+     */
     public function page($page, $language = null)
     {
         if ($content = $this->cache->getPage(($page))){
@@ -49,6 +66,12 @@ class Wurd
         return $content;
     }
 
+    /**
+     * @param $page
+     * @param $language
+     * @return mixed
+     * @throws HttpException
+     */
     protected function request($page, $language)
     {
         $client = new Client();
@@ -62,7 +85,11 @@ class Wurd
 
         return json_decode($res->getBody());
     }
-    
+
+    /**
+     * @param null $page
+     * @return string
+     */
     protected function segments($page = null)
     {
         if ($page) {
