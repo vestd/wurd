@@ -4,7 +4,7 @@ namespace Vestd\Wurd\CacheProvider;
 
 use League\Flysystem;
 
-class LaravelCacheProvider implements CacheProviderInterface
+class FlysystemCacheProvider implements CacheProviderInterface
 {
     protected $filesystem;
     protected $filePath;
@@ -14,8 +14,8 @@ class LaravelCacheProvider implements CacheProviderInterface
     /**
      * LaravelCacheProvider constructor.
      * @param Flysystem\Filesystem $filesystem
-     * @param $filePath
-     * @param $maxAge in minutes
+     * @param string $filePath
+     * @param int $maxAge in minutes
      * @param string $fileName
      */
     public function __construct(Flysystem\Filesystem $filesystem, $filePath, $maxAge, $fileName = "wurd.json")
@@ -27,7 +27,7 @@ class LaravelCacheProvider implements CacheProviderInterface
     }
 
     /**
-     * @param $page
+     * @param string $page
      * @return bool
      */
     public function getPage($page)
@@ -42,7 +42,7 @@ class LaravelCacheProvider implements CacheProviderInterface
     }
 
     /**
-     * @param $language
+     * @param string $language
      * @return bool|mixed
      */
     public function getLanguage($language)
@@ -60,8 +60,8 @@ class LaravelCacheProvider implements CacheProviderInterface
     }
 
     /**
-     * @param $page
-     * @param $contents
+     * @param string $page
+     * @param object $contents
      */
     public function storePage($page, $contents)
     {
@@ -70,8 +70,8 @@ class LaravelCacheProvider implements CacheProviderInterface
     }
 
     /**
-     * @param $language
-     * @param $contents
+     * @param string $language
+     * @param object $contents
      */
     public function storeLanguage($language, $contents)
     {
@@ -87,7 +87,7 @@ class LaravelCacheProvider implements CacheProviderInterface
     }
 
     /**
-     * @param null $language
+     * @param string|null $language
      * @return bool|mixed\
      */
     protected function read($language = null)
@@ -106,7 +106,7 @@ class LaravelCacheProvider implements CacheProviderInterface
     }
 
     /**
-     * @param $contents
+     * @param object $contents
      * @param null $language
      */
     protected function write($contents, $language = null)
@@ -117,7 +117,7 @@ class LaravelCacheProvider implements CacheProviderInterface
     }
 
     /**
-     * @param null $language
+     * @param string|null $language
      * @return string
      */
     protected function filePath($language = null)
@@ -130,7 +130,7 @@ class LaravelCacheProvider implements CacheProviderInterface
     }
 
     /**
-     * @param $contents
+     * @param object $contents
      * @return bool
      */
     protected function expired($contents)

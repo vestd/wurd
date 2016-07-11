@@ -14,7 +14,7 @@ class Wurd
 
     /**
      * Wurd constructor.
-     * @param $appName
+     * @param string $appName
      * @param CacheProviderInterface $cacheProvider
      * @param string $baseUrl
      */
@@ -26,7 +26,7 @@ class Wurd
     }
 
     /**
-     * @param null $language
+     * @param string|null $language
      * @return mixed
      * @throws HttpException
      */
@@ -46,8 +46,8 @@ class Wurd
     }
 
     /**
-     * @param $page
-     * @param null $language
+     * @param string $page
+     * @param string|null $language
      * @return mixed
      * @throws HttpException
      */
@@ -67,8 +67,8 @@ class Wurd
     }
 
     /**
-     * @param $page
-     * @param $language
+     * @param string $page
+     * @param string|null $language
      * @return mixed
      * @throws HttpException
      */
@@ -87,7 +87,7 @@ class Wurd
     }
 
     /**
-     * @param null $page
+     * @param string|null $page
      * @return string
      */
     protected function segments($page = null)
