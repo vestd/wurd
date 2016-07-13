@@ -13,10 +13,10 @@ class WurdTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function it_gets_language_file_from_wurd()
+    public function it_gets_default_language_file_from_wurd()
     {
-        $filesystem = new Filesystem(new Local('/home/vagrant/www/Wurd/Vestd/Wurd/tests/'));
-        $cacheProvider = new FlysystemCacheProvider($filesystem, '/storage/', 0);
+        $filesystem = new Filesystem(new Local('/home/vagrant/www/Wurd/Vestd/Wurd/tests/storage/'));
+        $cacheProvider = new FlysystemCacheProvider($filesystem, 0);
         $wurd = new Wurd('apitest', $cacheProvider);
         $content = $wurd->language();
 

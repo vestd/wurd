@@ -18,7 +18,7 @@ class FlysystemCacheProvider implements CacheProviderInterface
      * @param int $maxAge in minutes
      * @param string $fileName
      */
-    public function __construct(Flysystem\Filesystem $filesystem, $filePath, $maxAge, $fileName = "wurd.json")
+    public function __construct(Flysystem\Filesystem $filesystem, $maxAge, $filePath = "", $fileName = "wurd.json")
     {
         $this->filesystem = $filesystem;
         $this->filePath = $filePath;
@@ -32,7 +32,8 @@ class FlysystemCacheProvider implements CacheProviderInterface
      */
     public function getPage($page)
     {
-        if ($contents = $this->read()) {
+        $contents = $this->read();
+        if ($contents) {
             if (array_key_exists($page, $contents)) {
                 return $contents[$page];
             }
