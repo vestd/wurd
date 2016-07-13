@@ -1,5 +1,5 @@
 # Setup
-
+This is still in progress and as such is not a public package.
 
 # Cache Provider
 This api uses Flysystem for caching the language files either locally or remotely. If you wish to use your own provider simply implement the CacheProviderInterface.
@@ -18,3 +18,20 @@ $wurd = new Wurd('yourWurdAppName', $cacheProvider);
 To get a full language file, use `$wurd->language('en');`. Specifying no language will return the default language (eg `$wurd->language();`)
 
 To get a single page, use `$wurd->page('pageIWant');`. If you want a page from the non-default language, use `$wurd->page('pageIWant', 'languageName');`.
+
+# To do
+- Wurd Tests - decide how best to handle extracting the real API
+- Cache Tests
+
+# Laravel example
+
+```
+$wurd = new \Vestd\Wurd\Wurd(
+    'yourWurdAppName',
+    new \Vestd\Wurd\CacheProvider\LaravelCacheProvider(
+        \Illuminate\Support\Facades\Storage::getDriver(),
+        '/folder-within-storage/',
+        60
+    )
+);
+```
