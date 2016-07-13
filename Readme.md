@@ -15,9 +15,11 @@ $wurd = new Wurd('yourWurdAppName', $cacheProvider);
 ```
 
 # Usage
-To get a full language file, use `$wurd->language('en');`. Specifying no language will return the default language (eg `$wurd->language();`)
+To get a full language file, use `$wurd->language('en');`. 
+Specifying no language will return the default language (eg `$wurd->language();`)
 
-To get a single page, use `$wurd->page('pageIWant');`. If you want a page from the non-default language, use `$wurd->page('pageIWant', 'languageName');`.
+To get a single page, use `$wurd->page('pageIWant');`. 
+If you want a page from the non-default language, use `$wurd->page('pageIWant', 'languageName');`.
 
 # To do
 - Wurd Tests - decide how best to handle extracting the real API
