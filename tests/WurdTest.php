@@ -26,6 +26,27 @@ class WurdTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function it_gets_content_from_cache()
+    {
+        $filesystem = new Filesystem(new Local('/home/vagrant/www/Wurd/Vestd/Wurd/tests/storage/'));
+        $cacheProvider = new FlysystemCacheProvider($filesystem, 1);
+        $wurd = new Wurd('apitest', $cacheProvider);
+
+        $cacheProvider->storePage(
+            'fromtest',
+            (object)[
+                'teststring' => 'from test'
+            ]
+        );
+
+        $content = $wurd->pages('fromtest');
+
+        $this->assertEquals('from test', $content->fromtest->teststring);
+    }
+
+    /**
+     * @test
+     */
     public function it_loads_default_cache_provider()
     {
         new Wurd('apitest');

@@ -10,9 +10,32 @@ use Vestd\Wurd\Exception\HttpException;
 class Wurd
 {
 
+    /**
+     * The name of your app on Wurd
+     *
+     * @var string
+     */
     protected $appName;
+
+    /**
+     * The Cache Provider to use
+     *
+     * @var CacheProviderInterface|FlysystemCacheProvider
+     */
     protected $cache;
+
+    /**
+     * Base url for the api
+     *
+     * @var string
+     */
     protected $baseUrl;
+
+    /**
+     * GET parameters to send to the api
+     *
+     * @var array
+     */
     protected $options;
 
     /**

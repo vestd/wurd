@@ -115,7 +115,6 @@ class FlysystemCacheProvider implements CacheProviderInterface
     protected function write($contents, $language = null)
     {
         $contents->updated_at = date("Y-m-d H:i:s");
-
         $this->filesystem->put($this->filePath($language), json_encode($contents));
     }
 
@@ -141,7 +140,7 @@ class FlysystemCacheProvider implements CacheProviderInterface
         if (!property_exists($contents, 'updated_at')) {
             return true;
         }
-        if (time() > strtotime('+' . $this->maxAge.' minutes', strtotime($contents->updated_at))) {
+        if (time() > strtotime('+' . $this->maxAge . ' minutes', strtotime($contents->updated_at))) {
             return true;
         }
 
