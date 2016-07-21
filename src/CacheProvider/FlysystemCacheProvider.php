@@ -28,14 +28,15 @@ class FlysystemCacheProvider implements CacheProviderInterface
 
     /**
      * @param string $page
+     * @param null $language
      * @return bool
      */
-    public function getPage($page)
+    public function getPage($page, $language = null)
     {
-        $contents = $this->read();
+        $contents = $this->read($language);
         if ($contents) {
             if (array_key_exists($page, $contents)) {
-                return $contents[$page];
+                return $contents->$page;
             }
         }
 
@@ -63,11 +64,12 @@ class FlysystemCacheProvider implements CacheProviderInterface
     /**
      * @param string $page
      * @param object $contents
+     * @param null $language
      */
-    public function storePage($page, $contents)
+    public function storePage($page, $contents, $language = null)
     {
         $contents = (object)[$page => $contents];
-        $this->write($contents);
+        $this->write($contents, $language);
     }
 
     /**
@@ -139,7 +141,7 @@ class FlysystemCacheProvider implements CacheProviderInterface
         if (!property_exists($contents, 'updated_at')) {
             return true;
         }
-        if (time() > strtotime('+'.$this->maxAge.' minutes', strtotime($contents->updated_at))) {
+        if (time() > strtotime('+' . $this->maxAge.' minutes', strtotime($contents->updated_at))) {
             return true;
         }
 
