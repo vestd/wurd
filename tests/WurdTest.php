@@ -55,4 +55,15 @@ class WurdTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('lang2 test string', $content->testpage->teststring);
     }
 
+    /**
+     * @test
+     */
+    public function it_gets_draft_content()
+    {
+        $wurd = new Wurd('apitest');
+        $content = $wurd->pages('testpage', null, ['draft' => true]);
+
+        $this->assertEquals('test string draft', $content->testpage->teststring);
+    }
+
 }
