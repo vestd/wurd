@@ -107,10 +107,13 @@ class Wurd
 
         $retrievedContents = $this->request($pagesToRetrieve, $language, $options);
 
-        if ($retrievedContents) {
-            foreach ($retrievedContents as $page => $retrievedPageContent) {
-                $this->cache->storePage($page, $retrievedPageContent, $language);
-                $content->$page = $retrievedPageContent;
+        if (!empty($pagesToRetrieve)) {
+            $retrievedContents = $this->request($pagesToRetrieve, $language, $options);
+            if ($retrievedContents) {
+                foreach ($retrievedContents as $page => $retrievedPageContent) {
+                    $this->cache->storePage($page, $retrievedPageContent, $language);
+                    $content->$page = $retrievedPageContent;
+                }
             }
         }
 
