@@ -105,8 +105,6 @@ class Wurd
             }
         }
 
-        $retrievedContents = $this->request($pagesToRetrieve, $language, $options);
-
         if (!empty($pagesToRetrieve)) {
             $retrievedContents = $this->request($pagesToRetrieve, $language, $options);
             if ($retrievedContents) {
@@ -128,6 +126,10 @@ class Wurd
      */
     protected function request($pages, $language, $options = [])
     {
+        if (empty($pages)) {
+            return [];
+        }
+
         $uri = $this->segments(
             $pages,
             array_merge(
