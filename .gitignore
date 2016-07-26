@@ -1,2 +1,4 @@
 /vendor
-/wurd.json
+/src/lang2
+/src/wurd.json
+/tests/storage

@@ -84,7 +84,7 @@ class Wurd
      * @param $pages
      * @param null $language
      * @param array $options
-     * @return \stdClass
+     * @return array
      */
     public function pages($pages, $language = null, $options = [])
     {
@@ -92,14 +92,14 @@ class Wurd
             $pages = [$pages];
         }
 
-        $content = new \stdClass();
+        $content = [];
         $pagesToRetrieve = [];
 
         foreach ($pages as $page) {
             $pageContent = $this->cache->getPage($page, $language);
 
             if ($pageContent){
-                $content->$page = $pageContent;
+                $content[$page] = $pageContent;
             } else {
                 $pagesToRetrieve[] = $page;
             }
@@ -110,7 +110,7 @@ class Wurd
             if ($retrievedContents) {
                 foreach ($retrievedContents as $page => $retrievedPageContent) {
                     $this->cache->storePage($page, $retrievedPageContent, $language);
-                    $content->$page = $retrievedPageContent;
+                    $content[$page] = $retrievedPageContent;
                 }
             }
         }
@@ -126,10 +126,6 @@ class Wurd
      */
     protected function request($pages, $language, $options = [])
     {
-        if (empty($pages)) {
-            return [];
-        }
-
         $uri = $this->segments(
             $pages,
             array_merge(
@@ -150,7 +146,7 @@ class Wurd
             throw new HttpException();
         }
 
-        return json_decode($res->getBody());
+        return json_decode($res->getBody(), true);
     }
 
     /**

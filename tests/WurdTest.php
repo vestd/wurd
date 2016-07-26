@@ -10,17 +10,32 @@ use Vestd\Wurd\Wurd;
 class WurdTest extends \PHPUnit_Framework_TestCase
 {
 
+    public function tearDown()
+    {
+        $filesystem = new Filesystem(new Local(__DIR__ . '/../'));
+
+        $filesystem->deleteDir('tests/storage');
+        if ($filesystem->has('src/lang2')) {
+            $filesystem->deleteDir('src/lang2');
+        }
+        if ($filesystem->has('src/wurd.json')) {
+            $filesystem->delete('src/wurd.json');
+        }
+
+        parent::tearDown();
+    }
+
     /**
      * @test
      */
     public function it_gets_default_language_file_from_wurd()
     {
-        $filesystem = new Filesystem(new Local('/home/vagrant/www/Wurd/Vestd/Wurd/tests/storage/'));
+        $filesystem = new Filesystem(new Local(__DIR__ . '/storage/'));
         $cacheProvider = new FlysystemCacheProvider($filesystem, 0);
         $wurd = new Wurd('apitest', $cacheProvider);
         $content = $wurd->language();
 
-        $this->assertEquals('test string', $content->testpage->teststring);
+        $this->assertEquals('test string', $content['testpage']['teststring']);
     }
 
     /**
@@ -28,7 +43,7 @@ class WurdTest extends \PHPUnit_Framework_TestCase
      */
     public function it_gets_content_from_cache()
     {
-        $filesystem = new Filesystem(new Local('/home/vagrant/www/Wurd/Vestd/Wurd/tests/storage/'));
+        $filesystem = new Filesystem(new Local(__DIR__ . '/storage/'));
         $cacheProvider = new FlysystemCacheProvider($filesystem, 1);
         $wurd = new Wurd('apitest', $cacheProvider);
 
@@ -41,7 +56,7 @@ class WurdTest extends \PHPUnit_Framework_TestCase
 
         $content = $wurd->pages('fromtest');
 
-        $this->assertEquals('from test', $content->fromtest->teststring);
+        $this->assertEquals('from test', $content['fromtest']['teststring']);
     }
 
     /**
@@ -60,8 +75,8 @@ class WurdTest extends \PHPUnit_Framework_TestCase
         $wurd = new Wurd('apitest');
         $content = $wurd->pages(['testpage', 'testpage2']);
 
-        $this->assertEquals('test string', $content->testpage->teststring);
-        $this->assertEquals('test string 2', $content->testpage2->teststring2);
+        $this->assertEquals('test string', $content['testpage']['teststring']);
+        $this->assertEquals('test string 2', $content['testpage2']['teststring2']);
     }
 
     /**
@@ -73,7 +88,7 @@ class WurdTest extends \PHPUnit_Framework_TestCase
         $wurd = new Wurd('apitest');
         $content = $wurd->pages('testpage', $language);
 
-        $this->assertEquals('lang2 test string', $content->testpage->teststring);
+        $this->assertEquals('lang2 test string', $content['testpage']['teststring']);
     }
 
     /**
@@ -84,7 +99,7 @@ class WurdTest extends \PHPUnit_Framework_TestCase
         $wurd = new Wurd('apitest');
         $content = $wurd->pages('testpage', null, ['draft' => true]);
 
-        $this->assertEquals('test string draft', $content->testpage->teststring);
+        $this->assertEquals('test string draft', $content['testpage']['teststring']);
     }
 
 }

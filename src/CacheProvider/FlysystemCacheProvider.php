@@ -36,7 +36,7 @@ class FlysystemCacheProvider implements CacheProviderInterface
         $contents = $this->read($language);
         if ($contents) {
             if (array_key_exists($page, $contents)) {
-                return $contents->$page;
+                return $contents[$page];
             }
         }
 
@@ -68,7 +68,7 @@ class FlysystemCacheProvider implements CacheProviderInterface
      */
     public function storePage($page, $contents, $language = null)
     {
-        $contents = (object)[$page => $contents];
+        $contents = [$page => $contents];
         $this->write($contents, $language);
     }
 
@@ -99,7 +99,7 @@ class FlysystemCacheProvider implements CacheProviderInterface
             return false;
         }
 
-        $contents = json_decode($this->filesystem->read($this->filePath($language)));
+        $contents = json_decode($this->filesystem->read($this->filePath($language)), true);
 
         if ($this->expired($contents)) {
             return false;
@@ -114,7 +114,7 @@ class FlysystemCacheProvider implements CacheProviderInterface
      */
     protected function write($contents, $language = null)
     {
-        $contents->updated_at = date("Y-m-d H:i:s");
+        $contents['updated_at'] = date("Y-m-d H:i:s");
         $this->filesystem->put($this->filePath($language), json_encode($contents));
     }
 
@@ -137,10 +137,10 @@ class FlysystemCacheProvider implements CacheProviderInterface
      */
     protected function expired($contents)
     {
-        if (!property_exists($contents, 'updated_at')) {
+        if (!array_key_exists('updated_at', $contents)) {
             return true;
         }
-        if (time() > strtotime('+' . $this->maxAge . ' minutes', strtotime($contents->updated_at))) {
+        if (time() > strtotime('+' . $this->maxAge . ' minutes', strtotime($contents['updated_at']))) {
             return true;
         }
 
