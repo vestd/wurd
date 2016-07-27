@@ -8,6 +8,21 @@ This api by default uses Flysystem for caching the language files either locally
 $wurd = new Wurd('yourWurdAppName');
 ```
 
+# Usage
+## Single page/pages
+
+To get a single page, use `$wurd->pages('pageIWant');`. 
+
+For multiple pages, use `$wurd->pages(['pageIWant', 'anotherPage']);`
+
+If you want pages from the non-default language, specify the language as the second parameter `$wurd->pages('pageIWant', 'languageName');`.
+
+## Entire language file
+
+To get a full language file, use `$wurd->language('en');`. 
+
+Specifying no language will return the default language (eg `$wurd->language();`)
+
 # Cache Provider
 
 For more control over Flysystem and the CacheProvider, pass Flysystem your own choice of adapter (in this case Local for local disk storage). Then pass Flysystem on to the cache provider, and load that in to Wurd. 
@@ -21,22 +36,6 @@ $filesystem = new League\Flysystem\Filesystem($adapter);
 $cacheProvider = new FlysystemCacheProvider($filesystem, $timeToLive);
 $wurd = new Wurd('yourWurdAppName', $cacheProvider);
 ```
-
-# Usage
-## Single page/pages
-
-To get a single page, use `$wurd->pages('pageIWant');`. 
-
-For multiple pages, use `$wurd->pages(['pageIWant', 'anotherPage'])`
-
-If you want pages from the non-default language, specify the language as the second parameter `$wurd->pages('pageIWant', 'languageName');`.
-
-## Entire language file
-
-To get a full language file, use `$wurd->language('en');`. 
-
-Specifying no language will return the default language (eg `$wurd->language();`)
-
 
 # Laravel example
 
