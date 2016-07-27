@@ -67,5 +67,5 @@ class FlysystemCacheTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('some/other/folder/copy.json', $filePath);
     }
-    
+
 }
