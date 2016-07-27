@@ -93,7 +93,7 @@ class FlysystemCacheProvider implements CacheProviderInterface
      * @param string|null $language
      * @return bool|mixed\
      */
-    protected function read($language = null)
+    public function read($language = null)
     {
         if (!$this->filesystem->has($this->filePath($language))) {
             return false;
@@ -112,7 +112,7 @@ class FlysystemCacheProvider implements CacheProviderInterface
      * @param object $contents
      * @param null $language
      */
-    protected function write($contents, $language = null)
+    public function write($contents, $language = null)
     {
         $contents['updated_at'] = date("Y-m-d H:i:s");
         $this->filesystem->put($this->filePath($language), json_encode($contents));
@@ -122,7 +122,7 @@ class FlysystemCacheProvider implements CacheProviderInterface
      * @param string|null $language
      * @return string
      */
-    protected function filePath($language = null)
+    public function filePath($language = null)
     {
         if ($language) {
             return $this->filePath . $language . "/" . $this->fileName;
@@ -132,10 +132,10 @@ class FlysystemCacheProvider implements CacheProviderInterface
     }
 
     /**
-     * @param object $contents
+     * @param array $contents
      * @return bool
      */
-    protected function expired($contents)
+    public function expired($contents)
     {
         if (!array_key_exists('updated_at', $contents)) {
             return true;

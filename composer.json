@@ -1,6 +1,6 @@
 {
     "name": "vestd/wurd",
-    "description": "description_text",
+    "description": "php library for wurd.io",
     "minimum-stability": "stable",
     "license": "proprietary",
     "authors": [
